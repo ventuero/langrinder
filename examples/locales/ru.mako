@@ -1,0 +1,8 @@
+@start
+    Привет, я бот из примера ${F.link(F.bold("Langrinder"), "github.com/tirch/langrinder")}!
+
+@help
+    ${F.bold(f"Мяу, {F.mention()}!")}
+    Здесь мы тестируем Langrinder
+
+@nested_start Вот стартовое сообщение: ${this.get("start")}

@@ -1,0 +1,8 @@
+@start
+    Hi, i am bot from ${F.link(F.bold("Langrinder"), "github.com/tirch/langrinder")} example!
+
+@help
+    ${F.bold(f"Meow, {F.mention()}!")}
+    Here we are testing Langrinder
+
+@nested_start Here is start message: ${this.start()}
