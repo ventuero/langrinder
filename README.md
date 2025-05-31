@@ -17,7 +17,7 @@ pip install git+github.com/tirch/langrinder.git
 ```
 ... or with uv:
 ```shell
-uv add github.com/tirch/langrinder.git
+uv add https://github.com/tirch/langrinder.git
 ```
 
 ---
