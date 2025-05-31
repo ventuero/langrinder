@@ -6,3 +6,5 @@
     Here we are testing Langrinder
 
 @nested_start Here is start message: ${this.start()}
+
+@friends I have ${fr_arg} ${plural(fr_arg, "friend", "friends")}

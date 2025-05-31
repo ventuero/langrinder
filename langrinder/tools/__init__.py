@@ -1,0 +1,1 @@
+from .plural import PluralGenerator
