@@ -1,7 +1,8 @@
 import logging
 
+from langrinder.tools import Gender
 from telegrinder import API, Message, Telegrinder, Token
-from telegrinder.rules import Command, StartCommand
+from telegrinder.rules import Argument, Command, StartCommand
 from telegrinder.tools.formatting import HTMLFormatter
 from telegrinder.tools.global_context import GlobalContext
 
@@ -36,6 +37,36 @@ async def help_cmd(m: Message, tr: Translation):
 @bot.on.message(Command("nested"))
 async def nested_start_cmd(m: Message, tr: Translation):
     await m.answer(tr.nested_start())
+
+
+@bot.on.message(
+    Command(
+        "friends",
+        Argument("fr_arg", [int]),
+    ),
+)
+async def friends_cmd(m: Message, fr_arg: int, tr: Translation):
+    await m.answer(tr.friends(fr_arg=fr_arg))
+
+
+def gender_validator(value: str):
+    if value == Gender.MALE:
+        return Gender.MALE
+    if value == Gender.FEMALE:
+        return Gender.FEMALE
+    if value in [Gender.OTHER, "neutral"]:
+        return Gender.OTHER
+    return None
+
+
+@bot.on.message(
+    Command(
+        "iam",
+        Argument("gender_arg", [gender_validator]),
+    ),
+)
+async def iam_cmd(m: Message, gender_arg: Gender, tr: Translation):
+    await m.answer(tr.iam(gender=gender_arg))
 
 
 bot.run_forever(skip_updates=True)

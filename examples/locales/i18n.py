@@ -3,10 +3,12 @@ import time
 
 from langrinder.config import config
 from langrinder.generator import TextResult
-from langrinder.nodes import ConstLanguageCode
+from langrinder.nodes import UserLanguageCode
+from langrinder.tools import PluralGenerator, GenderGenerator
 from langrinder.tools.formatting import HTML
 from mako.template import Template
 from telegrinder.node import UserSource, scalar_node
+from langrinder.tools import PluralGenerator
 
 logger = logging.getLogger("langrinder.compilation")
 cache = {}
@@ -37,28 +39,34 @@ class BaseTranslation:
             cache[key] = tmp
         end = time.perf_counter()
         logger.debug("Compiled in %f s", end - start)
+        plural = PluralGenerator(locale=self.locale)
         return TextResult(
             tmp,
             {
                 "F": HTML(user=self.user),
                 "this": this,
+                "plural": plural.plural,
             },
         )
 
     @classmethod
-    def compose(cls, locale: ConstLanguageCode, user: UserSource):
+    def compose(cls, locale: UserLanguageCode, user: UserSource):
         return cls(locale=locale, user=user)
 
 
 class Translation(BaseTranslation):
-    pack = {   'en': {   'help': '${F.bold(f"Meow, {F.mention()}!")}\n'
+    pack = {   'en': {   'friends': 'I have ${fr_arg} ${plural(fr_arg, "friend", '
+                         '"friends")}',
+              'help': '${F.bold(f"Meow, {F.mention()}!")}\n'
                       'Here we are testing Langrinder',
-              'nested_start': 'Here is start message: ${this.start()}',
+              'iam': 'You are ${gender("male", "female", "oak?")}',
               'start': 'Hi, i am bot from ${F.link(F.bold("Langrinder"), '
                        '"github.com/tirch/langrinder")} example!'},
-    'ru': {   'help': '${F.bold(f"Мяу, {F.mention()}!")}\n'
+    'ru': {   'friends': 'У меня есть ${fr_arg} ${plural(fr_arg, "друг", '
+                         '"друга", "друзей")}',
+              'help': '${F.bold(f"Мяу, {F.mention()}!")}\n'
                       'Здесь мы тестируем Langrinder',
-              'nested_start': 'Вот стартовое сообщение: ${this.get("start")}',
+              'iam': 'Ты ${gender("мальчик", "девочка", "дуб?")}',
               'start': 'Привет, я бот из примера '
                        '${F.link(F.bold("Langrinder"), '
                        '"github.com/tirch/langrinder")}!'}}

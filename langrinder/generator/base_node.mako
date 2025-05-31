@@ -4,9 +4,11 @@ import time
 from langrinder.config import config
 from langrinder.generator import TextResult
 ${custom_node if custom_node else "from langrinder.nodes import ConstLanguageCode"}
+from langrinder.tools import PluralGenerator
 from langrinder.tools.formatting import HTML
 from mako.template import Template
 from telegrinder.node import UserSource, scalar_node
+from langrinder.tools import PluralGenerator
 
 logger = logging.getLogger("langrinder.compilation")
 cache = {}
@@ -37,11 +39,13 @@ class BaseTranslation:
             cache[key] = tmp
         end = time.perf_counter()
         logger.debug("Compiled in %f s", end - start)
+        plural = PluralGenerator(locale=self.locale)
         return TextResult(
             tmp,
             {
                 "F": HTML(user=self.user),
                 "this": this,
+                "plural": plural.plural,
             },
         )
 

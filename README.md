@@ -13,12 +13,10 @@ Engine for i18n with telegrinder integration based on mako!
 
 ## 📥 Installation
 ```shell
-pip install git+github.com/tirch/langrinder.git
+pip install git+https://github.com/tirch/langrinder.git
 ```
-... or with uv:
-```shell
-uv add https://github.com/tirch/langrinder.git
-```
+> [!NOTE]
+> Langrinder is available on PyPI, but is only updated on GitHub 
 
 ---
 
@@ -56,10 +54,11 @@ uv add https://github.com/tirch/langrinder.git
 ---
 
 ## 🧪 To-Do
-- [ ] Node based on user Telegram language
-- [ ] Allow to put args in `F.mention()`
-- [ ] Plural forms
-- [ ] Gender based forms
+### v1.1.0
+- [x] Node based on user Telegram language
+- [x] Allow to put args in `F.mention()`
+- [x] Plural forms
+- [x] Gender based forms
 
 ---
 

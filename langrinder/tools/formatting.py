@@ -23,10 +23,11 @@ class HTML:
     def link(self, text: str, url: str):
         return f"<a href='{url}'>{text}</a>"
 
-    def mention(self):
+    def mention(self, **kwargs):
         link = (
-            f"https://t.me/{self.user.username.unwrap()}"
-            if self.user.username
-            else f"tg://user?id={self.user.id}"
+            "https://t.me/"
+            f"{kwargs.get("username") or self.user.username.unwrap()}"
+            if self.user.username or kwargs.get("username")
+            else f"tg://user?id={kwargs.get("id") or self.user.id}"
         )
-        return self.link(self.user.full_name, link)
+        return self.link(kwargs.get("name") or self.user.full_name, link)
