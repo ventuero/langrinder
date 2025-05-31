@@ -1,6 +1,6 @@
 [project]
 name = "langrinder"
-version = "1.1.0"
+version = "1.1.1"
 description = "Engine for i18n with telegrinder integration based on mako!"
 readme = "README.md"
 requires-python = "<4.0,>=3.12"
@@ -26,6 +26,9 @@ package = true
 
 [tool.uv.sources]
 telegrinder = { git = "https://github.com/timoniq/telegrinder", rev = "dev" }
+
+[tool.setuptools.package-data]
+"langrinder.generator" = ["*.mako"]
 
 [tool.langrinder]
 default_locale = "ru"
