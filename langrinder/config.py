@@ -34,7 +34,7 @@ class LangrinderConfig:
     output: str
 
     default_locale: str = "ru"
-    node: str = "langrinder.nodes.ConstLanguageNode"
+    node: str = "langrinder.nodes.ConstLanguageCode"
     base_node_template: str = f"{LANGRINDER_PATH}/generator/base_node.mako"
     base_translation_template: str = (
         f"{LANGRINDER_PATH}/generator/base_translation.mako"
