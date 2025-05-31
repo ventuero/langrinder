@@ -13,12 +13,10 @@ Engine for i18n with telegrinder integration based on mako!
 
 ## 📥 Installation
 ```shell
-pip install git+github.com/tirch/langrinder.git
+pip install git+https://github.com/tirch/langrinder.git
 ```
-... or with uv:
-```shell
-uv add https://github.com/tirch/langrinder.git
-```
+> [!NOTE]
+> Langrinder is available on PyPI, but is only updated on GitHub 
 
 ---
 
