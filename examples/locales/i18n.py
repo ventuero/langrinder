@@ -4,7 +4,7 @@ import time
 from langrinder.config import config
 from langrinder.generator import TextResult
 from langrinder.nodes import UserLanguageCode
-from langrinder.tools import PluralGenerator
+from langrinder.tools import PluralGenerator, GenderGenerator
 from langrinder.tools.formatting import HTML
 from mako.template import Template
 from telegrinder.node import UserSource, scalar_node
@@ -59,12 +59,14 @@ class Translation(BaseTranslation):
                          '"friends")}',
               'help': '${F.bold(f"Meow, {F.mention()}!")}\n'
                       'Here we are testing Langrinder',
+              'iam': 'You are ${gender("male", "female", "oak?")}',
               'start': 'Hi, i am bot from ${F.link(F.bold("Langrinder"), '
                        '"github.com/tirch/langrinder")} example!'},
     'ru': {   'friends': 'У меня есть ${fr_arg} ${plural(fr_arg, "друг", '
                          '"друга", "друзей")}',
               'help': '${F.bold(f"Мяу, {F.mention()}!")}\n'
                       'Здесь мы тестируем Langrinder',
+              'iam': 'Ты ${gender("мальчик", "девочка", "дуб?")}',
               'start': 'Привет, я бот из примера '
                        '${F.link(F.bold("Langrinder"), '
                        '"github.com/tirch/langrinder")}!'}}

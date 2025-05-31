@@ -54,10 +54,11 @@ pip install git+https://github.com/tirch/langrinder.git
 ---
 
 ## 🧪 To-Do
+### v1.1.0
 - [x] Node based on user Telegram language
 - [x] Allow to put args in `F.mention()`
 - [x] Plural forms
-- [ ] Gender based forms
+- [x] Gender based forms
 
 ---
 

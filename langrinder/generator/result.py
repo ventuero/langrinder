@@ -4,6 +4,8 @@ from dataclasses import dataclass
 
 from mako.template import Template
 
+from langrinder.tools import GenderGenerator
+
 logger = logging.getLogger(__name__)
 
 
@@ -14,9 +16,13 @@ class TextResult:
 
     def __call__(self, **kwargs):
         start = time.perf_counter()
+        if kwargs.get("gender"):
+            gender_gen = GenderGenerator(kwargs["gender"])
+            del kwargs["gender"]
         rendered = self.template.render(
             **self.args,
             **kwargs,
+            gender=gender_gen.gender,
         )
         stop = time.perf_counter()
         logger.debug("Rendered in %f s", stop - start)
