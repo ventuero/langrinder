@@ -16,6 +16,11 @@ dependencies = [
     "typer>=0.16.0",
 ]
 
+[project.optional-dependencies]
+dev = [
+    "ruff>=0.11.12",
+]
+
 [tool.uv]
 package = true
 
@@ -67,7 +72,8 @@ ignore = [
     "UP038", # only affects perfomance and brings nothing useful
     "F401",
     "RUF",
-    "S702"
+    "S702",
+    "PLR2004"
 ]
 
 [tool.ruff.lint.isort]
