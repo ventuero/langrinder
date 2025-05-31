@@ -55,5 +55,13 @@ uv add https://github.com/tirch/langrinder.git
 
 ---
 
+## 🧪 To-Do
+- [ ] Node based on user Telegram language
+- [ ] Allow to put args in `F.mention()`
+- [ ] Plural forms
+- [ ] Gender based forms
+
+---
+
 ## 🔒 License
 Langrinder licensed under [MIT license](LICENSE). Free and open-source!
