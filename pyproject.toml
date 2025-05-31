@@ -43,7 +43,7 @@ target-version = "py312"
 src = ["src"]
 
 include = ["langrinder/**.py"]
-exclude = []
+exclude = ["example/locales/i18n.py"]
 
 [tool.ruff.lint]
 select = [
