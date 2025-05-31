@@ -36,6 +36,8 @@ node = "langrinder.nodes.UserLanguageCode"
 locales_path = "examples/locales"
 output = "examples/locales/i18n.py"
 translation_name = "Translation"
+base_node_template = "langrinder/generator/base_node.mako"
+base_translation_template = "langrinder/generator/base_translation.mako"
 
 [project.scripts]
 langrinder = "langrinder.cli.cli:cli"

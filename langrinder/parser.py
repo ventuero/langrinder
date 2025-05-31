@@ -12,7 +12,7 @@ class LangrinderSyntaxParser:
         r"\n(?P<block_data>(?: {4}[^\n]*\n?)*)"
         r")?"
         r"(?=\n@|\Z)",
-        re.IGNORECASE | re.MULTILINE | re.DOTALL,
+        re.IGNORECASE | re.MULTILINE | re.DOTALL | re.UNICODE,
     )
 
     @classmethod
