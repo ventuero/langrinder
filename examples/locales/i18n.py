@@ -33,7 +33,7 @@ class BaseTranslation:
             )
             tmp = cached_tmp
         else:
-            tmp = Template(self.pack[self.locale][key])
+            tmp = Template(self.pack[self.locale][key])  # noqa: S702
             cache[key] = tmp
         end = time.perf_counter()
         logger.debug("Compiled in %f s", end - start)

@@ -3,7 +3,7 @@ import time
 
 from langrinder.config import config
 from langrinder.generator import TextResult
-${custom_node if custom_node else "from langrinder.nodes import ConstLocale"}
+${custom_node if custom_node else "from langrinder.nodes import ConstLanguageCode"}
 from langrinder.tools.formatting import HTML
 from mako.template import Template
 from telegrinder.node import UserSource, scalar_node
@@ -33,7 +33,7 @@ class BaseTranslation:
             )
             tmp = cached_tmp
         else:
-            tmp = Template(self.pack[self.locale][key])
+            tmp = Template(self.pack[self.locale][key])  # noqa: S702
             cache[key] = tmp
         end = time.perf_counter()
         logger.debug("Compiled in %f s", end - start)
@@ -46,5 +46,5 @@ class BaseTranslation:
         )
 
     @classmethod
-    def compose(cls, locale: ${custom_node_name if custom_node_name else "ConstLocale"}, user: UserSource):
+    def compose(cls, locale: ${custom_node_name if custom_node_name else "ConstLanguageCode"}, user: UserSource):
         return cls(locale=locale, user=user)
