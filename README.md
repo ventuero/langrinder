@@ -30,21 +30,22 @@ uv add github.com/tirch/langrinder.git
     default_locale = "ru"
     node = "langrinder.nodes.ConstLanguageCode"
     locales_path = "examples/locales"
-    output = "{locales_path}/i18n.py"
+    output = "examples/locales/i18n.py"
+    translation_name = "Translation" # i18n class
+    # base_node_template = "foo/bar.mako"
+    # base_translation_template = "foo2/bar2.mako"
     ```
 - Create locales files (`<locale>.mako`)
 
     `en.mako`:
     ```yaml
-    # main
     @start
-        Hello, ${f.mention()}!
+        Hello, ${F.mention()}!
     ```
     `ru.mako`:
     ```yaml
-    # main
     @start
-        Привет, ${f.mention()}!
+        Привет, ${F.mention()}!
     ```
 - Compile translations
     ```shell
