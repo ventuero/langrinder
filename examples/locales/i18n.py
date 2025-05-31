@@ -4,7 +4,7 @@ import time
 from langrinder.config import config
 from langrinder.generator import TextResult
 from langrinder.nodes import UserLanguageCode
-from langrinder.tools import PluralGenerator, GenderGenerator
+from langrinder.tools import PluralGenerator
 from langrinder.tools.formatting import HTML
 from mako.template import Template
 from telegrinder.node import UserSource, scalar_node
