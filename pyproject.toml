@@ -1,42 +1,36 @@
 [project]
 name = "langrinder"
-version = "1.0.0"
-description = "Engine for I18N with telegrinder integraion"
-authors = [
-    {name = "tirch",email = "247108189-tirch@users.noreply.gitlab.com"}
-]
-license = {text = "MIT"}
+version = "1.1.0"
+description = "Engine for i18n with telegrinder integration based on mako!"
 readme = "README.md"
-requires-python = ">=3.12,<4.0"
+requires-python = "<4.0,>=3.12"
+authors = [
+    {name = "tirch", email = "247108189-tirch@users.noreply.gitlab.com"}
+]
 dependencies = [
-    "telegrinder (>=0.4.2,<0.5.0)",
-    "colorama (>=0.4.6,<0.5.0)",
-    "typer (>=0.16.0,<0.17.0)",
-    "halo (>=0.0.31,<0.0.32)",
-    "toml (>=0.10.2,<0.11.0)",
-    "mako (>=1.3.10,<2.0.0)"
+    "colorama>=0.4.6",
+    "halo>=0.0.31",
+    "mako>=1.3.10",
+    "telegrinder",
+    "toml>=0.10.2",
+    "typer>=0.16.0",
 ]
 
-[build-system]
-requires = ["poetry-core>=2.0.0,<3.0.0"]
-build-backend = "poetry.core.masonry.api"
+[tool.uv]
+package = true
 
-[tool.poetry.group.dev]
-optional = true
-
-[tool.poetry.group.dev.dependencies]
-ruff = "^0.11.12"
-sphinx = "^8.2.3"
-
-[tool.poetry.scripts]
-langrinder = "langrinder.cli.cli:cli"
+[tool.uv.sources]
+telegrinder = { git = "https://github.com/timoniq/telegrinder", rev = "dev" }
 
 [tool.langrinder]
 default_locale = "ru"
-node = "langrinder.nodes.ConstLanguageCode"
+node = "langrinder.nodes.UserLanguageCode"
 locales_path = "examples/locales"
 output = "examples/locales/i18n.py"
 translation_name = "Translation"
+
+[project.scripts]
+langrinder = "langrinder.cli.cli:cli"
 
 [tool.ruff]
 line-length = 79
