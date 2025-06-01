@@ -1,17 +1,19 @@
 import logging
 import time
 
-from langrinder.config import config
 from langrinder.generator import TextResult
-from langrinder.nodes import UserLanguageCode
+from langrinder.integration.telegrinder.nodes import ConstLanguageCode
 from langrinder.tools import PluralGenerator
 from langrinder.tools.formatting import HTML
 from mako.template import Template
 from telegrinder.node import UserSource, scalar_node
+from telegrinder.tools.global_context import GlobalContext, GlobalCtxVar
 from langrinder.tools import PluralGenerator
+from langrinder.integration.pendulum import PendulumWrapper
 
 logger = logging.getLogger("langrinder.compilation")
 cache = {}
+ctx = GlobalContext("langrinder")
 
 
 @scalar_node()
@@ -23,7 +25,11 @@ class BaseTranslation:
             locale: str | None = None,
             user: UserSource | None = None,
     ):
-        self.locale = locale if locale else config.default_locale
+        self.locale = (
+            locale
+            if locale
+            else ctx.get("locale").unwrap().value
+        )
         self.user = user
 
     def var(self, key: str, this) -> str:
@@ -39,18 +45,35 @@ class BaseTranslation:
             cache[key] = tmp
         end = time.perf_counter()
         logger.debug("Compiled in %f s", end - start)
-        plural = PluralGenerator(locale=self.locale)
+        plural = (
+            ctx
+            .get("plural_generator")
+            .unwrap_or(
+                GlobalCtxVar(PluralGenerator, name="plural_generator"),
+            )
+            .value(locale=self.locale)
+        )
+        time_wrapper = (
+            ctx
+            .get("time_wrapper")
+            .unwrap_or(
+                GlobalCtxVar(PendulumWrapper, name="time_wrapper"),
+            )
+            .value(locale=self.locale)
+        )
         return TextResult(
             tmp,
             {
                 "F": HTML(user=self.user),
                 "this": this,
                 "plural": plural.plural,
+                "time": time_wrapper,
+                **ctx.get("args").unwrap_or({}).value,
             },
         )
 
     @classmethod
-    def compose(cls, locale: UserLanguageCode, user: UserSource):
+    def compose(cls, locale: ConstLanguageCode, user: UserSource):
         return cls(locale=locale, user=user)
 
 
@@ -60,6 +83,8 @@ class Translation(BaseTranslation):
               'help': '${F.bold(f"Meow, {F.mention()}!")}\n'
                       'Here we are testing Langrinder',
               'iam': 'You are ${gender("male", "female", "oak?")}',
+              'meow': '${meow}',
+              'nowtime': 'Now ${time.in_words(now, seconds=False)}',
               'start': 'Hi, i am bot from ${F.link(F.bold("Langrinder"), '
                        '"github.com/tirch/langrinder")} example!'},
     'ru': {   'friends': 'У меня есть ${fr_arg} ${plural(fr_arg, "друг", '
@@ -67,6 +92,8 @@ class Translation(BaseTranslation):
               'help': '${F.bold(f"Мяу, {F.mention()}!")}\n'
                       'Здесь мы тестируем Langrinder',
               'iam': 'Ты ${gender("мальчик", "девочка", "дуб?")}',
+              'meow': '${meow}',
+              'nowtime': 'Сейчас ${time.in_words(now, seconds=False)}',
               'start': 'Привет, я бот из примера '
                        '${F.link(F.bold("Langrinder"), '
                        '"github.com/tirch/langrinder")}!'}}
