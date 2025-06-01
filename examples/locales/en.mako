@@ -9,3 +9,5 @@
 
 @friends I have ${fr_arg} ${plural(fr_arg, "friend", "friends")}
 @iam You are ${gender("male", "female", "oak?")}
+@meow ${meow}
+@nowtime Now ${time.in_words(now, seconds=False)}

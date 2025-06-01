@@ -1,6 +1,6 @@
 [project]
 name = "langrinder"
-version = "1.1.3"
+version = "2.0.0"
 description = "Engine for i18n with telegrinder integration based on mako!"
 readme = "README.md"
 requires-python = "<4.0,>=3.12"
@@ -8,12 +8,10 @@ authors = [
     {name = "tirch", email = "247108189-tirch@users.noreply.gitlab.com"}
 ]
 dependencies = [
-    "colorama>=0.4.6",
-    "halo>=0.0.31",
     "mako>=1.3.10",
+    "pendulum>=3.1.0",
     "telegrinder",
     "toml>=0.10.2",
-    "typer>=0.16.0",
 ]
 
 [project.optional-dependencies]
@@ -29,15 +27,6 @@ telegrinder = { git = "https://github.com/timoniq/telegrinder", rev = "dev" }
 
 [tool.setuptools.package-data]
 "langrinder.generator" = ["*.mako"]
-
-[tool.langrinder]
-default_locale = "ru"
-node = "langrinder.nodes.UserLanguageCode"
-locales_path = "examples/locales"
-output = "examples/locales/i18n.py"
-translation_name = "Translation"
-base_node_template = "langrinder/generator/base_node.mako"
-base_translation_template = "langrinder/generator/base_translation.mako"
 
 [project.scripts]
 langrinder = "langrinder.cli.cli:cli"
@@ -78,7 +67,10 @@ ignore = [
     "F401",
     "RUF",
     "S702",
-    "PLR2004"
+    "PLR2004",
+    "T201",
+    "FBT001",
+    "FBT002"
 ]
 
 [tool.ruff.lint.isort]

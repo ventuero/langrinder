@@ -1,12 +1,20 @@
 import logging
 
-from langrinder.config import config
+from telegrinder.tools.global_context import GlobalContext, GlobalCtxVar
 
+ctx = GlobalContext("langrinder")
 logger = logging.getLogger(__name__)
 
 
 class PluralGenerator:
-    def __init__(self, locale: str = config.default_locale):
+    def __init__(
+            self,
+            locale: str = (
+                ctx.get("locale")
+                .unwrap_or(GlobalCtxVar("en", name="locale"))
+                .value
+            ),
+    ):
         self.locale = locale
         self._PLURAL_RULES = {
             "en": lambda n: "one" if n == 1 else "other",

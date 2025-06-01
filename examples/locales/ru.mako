@@ -9,3 +9,5 @@
 
 @friends У меня есть ${fr_arg} ${plural(fr_arg, "друг", "друга", "друзей")}
 @iam Ты ${gender("мальчик", "девочка", "дуб?")}
+@meow ${meow}
+@nowtime Сейчас ${time.in_words(now, seconds=False)}

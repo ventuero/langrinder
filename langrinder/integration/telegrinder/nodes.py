@@ -18,6 +18,4 @@ class ConstLanguageCode:
 class UserLanguageCode:
     @classmethod
     def compose(cls, src: Source):
-        return src.from_user.language_code.expect(
-            ComposeError("User doesn't have language code"),
-        )
+        return src.from_user.language_code.unwrap_or("en")
