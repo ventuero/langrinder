@@ -18,11 +18,10 @@ class TextResult:
         start = time.perf_counter()
         if kwargs.get("gender"):
             gender_gen = GenderGenerator(kwargs["gender"])
-            del kwargs["gender"]
+            kwargs["gender"] = gender_gen
         rendered = self.template.render(
             **self.args,
             **kwargs,
-            gender=gender_gen.gender,
         )
         stop = time.perf_counter()
         logger.debug("Rendered in %f s", stop - start)
