@@ -1,1 +1,1 @@
-from .integration.nodes import *  # noqa: F403
+from .integration.telegrinder.nodes import *  # noqa: F403
