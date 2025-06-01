@@ -1,19 +1,10 @@
 import re
 
 
-class LangrinderSyntaxParser:
-    TAB = " " * 4
-    JOINER = "\n"
-    MESSAGE_PATTERN = re.compile(
-        r"^@(?P<name>[\w_\d]+)"
-        r"(?:"
-        r"\s*=?\s*(?P<inline_data>[^\n]+)"
-        r"|"
-        r"\n(?P<block_data>(?: {4}[^\n]*\n?)*)"
-        r")?"
-        r"(?=\n@|\Z)",
-        re.IGNORECASE | re.MULTILINE | re.DOTALL | re.UNICODE,
-    )
+class LangrinderBaseParser:
+    TAB: str
+    JOINER: str
+    MESSAGE_PATTERN: re.Pattern
 
     @classmethod
     def parse_to_dict(cls, string: str) -> dict[str, str]:
