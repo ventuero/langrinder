@@ -7,7 +7,7 @@ Engine for i18n with telegrinder integration based on mako!
 - Based on mako templates
     Maximum flexibility and comfort
 - Compiles directly into Python classes
-- Variety of built-in functions and templates
+- Variety of built-in functions, integrations and templates
 
 ---
 
@@ -21,18 +21,6 @@ pip install git+https://github.com/tirch/langrinder.git
 ---
 
 ## 📦 Usage
-- Configure me in `pyproject.toml`
-    ```toml
-    # ...
-    [tool.langrinder]
-    default_locale = "ru"
-    node = "langrinder.nodes.ConstLanguageCode"
-    locales_path = "examples/locales"
-    output = "examples/locales/i18n.py"
-    translation_name = "Translation" # i18n class
-    # base_node_template = "foo/bar.mako"
-    # base_translation_template = "foo2/bar2.mako"
-    ```
 - Create locales files (`<locale>.mako`)
 
     `en.mako`:
@@ -45,11 +33,26 @@ pip install git+https://github.com/tirch/langrinder.git
     @start
         Привет, ${F.mention()}!
     ```
+- Create `locales/compile.py` (or ahother):
+    ```python
+    import logging
+
+    from langrinder import Langrinder
+
+    logging.basicConfig(level=logging.DEBUG)
+    logger = logging.getLogger()
+
+    langrinder = Langrinder(logger=logger) # You can input other parser, generator and node here
+    langrinder.compile(
+        input_dir="locales/",
+        output_file="locales/i18n.py",
+    )
+    ```
 - Compile translations
     ```shell
-    langrinder compile
+    python3 locales/compile.py
     ```
-- Enjoy! Read the full documentation [here](./docs/index.md)!
+- Enjoy! Read the full documentation [here](./docs/index.md), and see our [example](./examples/main.py)!
 
 ---
 
@@ -60,6 +63,14 @@ pip install git+https://github.com/tirch/langrinder.git
 - [x] Plural forms
 - [x] Gender based forms
 
+### v2.0.0
+- [x] Additional args from context
+- [x] Use `config.default_locale` if not const locale specified
+    > Using `ctx["locale"]`
+- [x] [Pendulum](https://github.com/python-pendulum/pendulum) integration
+- [x] Flexibility
+    > Now without CLI and config in `pyproject.toml`.
+    > Only `telegrinder.Telegrinder.compile()` with params
 ---
 
 ## 🔒 License
