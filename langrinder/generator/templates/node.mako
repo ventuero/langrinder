@@ -68,7 +68,7 @@ class BaseTranslation:
                 "this": this,
                 "plural": plural.plural,
                 "time": time_wrapper,
-                **ctx.get("args").unwrap_or({}).value,
+                **ctx.get("args").unwrap_or(GlobalCtxVar({}, name="args")).value,
             },
         )
 
