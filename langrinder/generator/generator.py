@@ -1,12 +1,12 @@
 import inspect
 from abc import ABCMeta
 from pathlib import Path
-from pprint import pformat
 
 from loguru import _logger
 from mako.template import Template
 
 from langrinder.parser import LangrinderSyntaxParser
+from langrinder.tools.json import dump_to_pack
 
 
 class LangrinderTranslationsGenerator:
@@ -80,7 +80,7 @@ class LangrinderTranslationsGenerator:
                     pack[locale_name] = parsed_data_for_locale
 
         translation_result = self.generate_translation(
-            pformat(pack, indent=4),
+            dump_to_pack(pack),
         )
 
         with Path(output_file).open(mode="w", encoding="utf-8") as out:

@@ -78,25 +78,24 @@ class BaseTranslation:
 
 
 class Translation(BaseTranslation):
-    pack = {   'en': {   'friends': 'I have ${fr_arg} ${plural(fr_arg, "friend", '
-                         '"friends")}',
-              'help': '${F.bold(f"Meow, {F.mention()}!")}\n'
-                      'Here we are testing Langrinder',
-              'iam': 'You are ${gender("male", "female", "oak?")}',
-              'meow': '${meow}',
-              'nowtime': 'Now ${time.in_words(now, seconds=False)}',
-              'start': 'Hi, i am bot from ${F.link(F.bold("Langrinder"), '
-                       '"github.com/tirch/langrinder")} example!'},
-    'ru': {   'friends': 'У меня есть ${fr_arg} ${plural(fr_arg, "друг", '
-                         '"друга", "друзей")}',
-              'help': '${F.bold(f"Мяу, {F.mention()}!")}\n'
-                      'Здесь мы тестируем Langrinder',
-              'iam': 'Ты ${gender("мальчик", "девочка", "дуб?")}',
-              'meow': '${meow}',
-              'nowtime': 'Сейчас ${time.in_words(now, seconds=False)}',
-              'start': 'Привет, я бот из примера '
-                       '${F.link(F.bold("Langrinder"), '
-                       '"github.com/tirch/langrinder")}!'}}
+    pack = {
+        "en": {
+            "start": "Hi, i am bot from ${F.link(F.bold(\"Langrinder\"), \"github.com/tirch/langrinder\")} example!",
+            "help": "${F.bold(f\"Meow, {F.mention()}!\")}\nHere we are testing Langrinder",
+            "friends": "I have ${fr_arg} ${plural(fr_arg, \"friend\", \"friends\")}",
+            "iam": "You are ${gender(\"male\", \"female\", \"oak?\")}",
+            "meow": "${meow}",
+            "nowtime": "Now ${time.in_words(now, seconds=False)}"
+        },
+        "ru": {
+            "start": "Привет, я бот из примера ${F.link(F.bold(\"Langrinder\"), \"github.com/tirch/langrinder\")}!",
+            "help": "${F.bold(f\"Мяу, {F.mention()}!\")}\nЗдесь мы тестируем Langrinder",
+            "friends": "У меня есть ${fr_arg} ${plural(fr_arg, \"друг\", \"друга\", \"друзей\")}",
+            "iam": "Ты ${gender(\"мальчик\", \"девочка\", \"дуб?\")}",
+            "meow": "${meow}",
+            "nowtime": "Сейчас ${time.in_words(now, seconds=False)}"
+        }
+    }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
