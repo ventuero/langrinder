@@ -1,13 +1,12 @@
-import logging
 import time
 from dataclasses import dataclass
 
 from mako.template import Template
-from telegrinder.tools.global_context import GlobalContext, GlobalCtxVar
+from telegrinder.modules import logger
+from telegrinder.tools.global_context import GlobalContext
 
 from langrinder.tools import GenderGenerator
 
-logger = logging.getLogger(__name__)
 ctx = GlobalContext("langrinder")
 
 
@@ -34,7 +33,7 @@ class TextResult:
             **kwargs,
         )
         stop = time.perf_counter()
-        logger.debug("Rendered in %f s", stop - start)
-        logger.debug("Render result: %s", rendered)
+        logger.debug("Rendered in {} s", stop - start)
+        logger.debug("Render result: {}", rendered)
 
         return rendered
