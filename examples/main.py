@@ -1,5 +1,3 @@
-import logging
-
 from langrinder.integration.pendulum import now
 from langrinder.tools import Gender
 from telegrinder import API, Message, Telegrinder, Token
@@ -9,13 +7,6 @@ from telegrinder.tools.global_context import GlobalContext
 
 from examples.locales.i18n import Translation
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(levelname)s | %(name)s: %(message)s",
-)
-logging.getLogger("telegrinder").setLevel(logging.WARNING)
-logging.getLogger("asyncio").setLevel(logging.WARNING)
-logging.getLogger("langrinder").setLevel(logging.DEBUG)
 api = API(Token.from_env())
 bot = Telegrinder(api)
 

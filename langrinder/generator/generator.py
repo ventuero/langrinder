@@ -1,9 +1,9 @@
 import inspect
-import logging
 from abc import ABCMeta
 from pathlib import Path
 from pprint import pformat
 
+from loguru import _logger
 from mako.template import Template
 
 from langrinder.parser import LangrinderSyntaxParser
@@ -16,7 +16,7 @@ class LangrinderTranslationsGenerator:
             translation_path: str,
             translation_name: str,
             node: ABCMeta,
-            logger: logging.Logger | None = None,
+            logger: _logger.Logger | None = None,
     ):
         self.parser = LangrinderSyntaxParser()
         self.node_path = node_path
@@ -34,7 +34,7 @@ class LangrinderTranslationsGenerator:
 
         result = (f"from {module_name} import {class_name}", class_name)
         if self.logger:
-            self.logger.debug("Node import: '%s'", result[0])
+            self.logger.debug("Node import: '{}'", result[0])
         return result
 
     def generate_node(self):
@@ -73,7 +73,7 @@ class LangrinderTranslationsGenerator:
                 with file_path.open("r", encoding="utf-8") as f:
                     file_content = f.read()
                     if self.logger:
-                        self.logger.debug("Rendering '%s'", locale_name)
+                        self.logger.debug("Rendering '{}'", locale_name)
                     parsed_data_for_locale = self.parser.parse_to_dict(
                         file_content,
                     )
@@ -85,5 +85,5 @@ class LangrinderTranslationsGenerator:
 
         with Path(output_file).open(mode="w", encoding="utf-8") as out:
             if self.logger:
-                self.logger.debug("Writing '%s'", output_file)
+                self.logger.debug("Writing '{}'", output_file)
             out.write(node_result + translation_result)

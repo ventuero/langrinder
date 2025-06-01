@@ -16,6 +16,7 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
+    "loguru>=0.7.3",
     "ruff>=0.11.12",
 ]
 
@@ -70,7 +71,8 @@ ignore = [
     "PLR2004",
     "T201",
     "FBT001",
-    "FBT002"
+    "FBT002",
+    "PLE1205"
 ]
 
 [tool.ruff.lint.isort]

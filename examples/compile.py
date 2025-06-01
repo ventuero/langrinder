@@ -1,9 +1,5 @@
-import logging
-
 from langrinder import Langrinder
-
-logging.basicConfig(level=logging.DEBUG)
-logger = logging.getLogger()
+from telegrinder.modules import logger
 
 langrinder = Langrinder(logger=logger) # You can input other parser, generator and node here
 langrinder.compile(
