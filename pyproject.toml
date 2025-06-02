@@ -29,9 +29,6 @@ telegrinder = { git = "https://github.com/timoniq/telegrinder", rev = "dev" }
 [tool.setuptools.package-data]
 "langrinder.generator.templates" = ["*.mako"]
 
-[project.scripts]
-langrinder = "langrinder.cli.cli:cli"
-
 [tool.ruff]
 line-length = 79
 target-version = "py312"
