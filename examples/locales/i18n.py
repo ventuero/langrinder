@@ -80,20 +80,22 @@ class BaseTranslation:
 class Translation(BaseTranslation):
     pack = {
         "en": {
-            "start": "Hi, i am bot from ${F.link(F.bold(\"Langrinder\"), \"github.com/tirch/langrinder\")} example!",
-            "help": "${F.bold(f\"Meow, {F.mention()}!\")}\nHere we are testing Langrinder",
+            "nested_start": "Here is start message: ${this.start()}",
             "friends": "I have ${fr_arg} ${plural(fr_arg, \"friend\", \"friends\")}",
             "iam": "You are ${gender(\"male\", \"female\", \"oak?\")}",
             "meow": "${meow}",
-            "nowtime": "Now ${time.in_words(now, seconds=False)}"
+            "nowtime": "Now ${time.in_words(now, seconds=False)}",
+            "start": "Hi, i am bot from ${F.link(F.bold(\"Langrinder\"), \"github.com/tirch/langrinder\")} example!",
+            "help": "${F.bold(f\"Meow, {F.mention()}!\")}\nHere we are testing Langrinder"
         },
         "ru": {
-            "start": "Привет, я бот из примера ${F.link(F.bold(\"Langrinder\"), \"github.com/tirch/langrinder\")}!",
-            "help": "${F.bold(f\"Мяу, {F.mention()}!\")}\nЗдесь мы тестируем Langrinder",
+            "nested_start": "Вот стартовое сообщение: ${this.start()}",
             "friends": "У меня есть ${fr_arg} ${plural(fr_arg, \"друг\", \"друга\", \"друзей\")}",
             "iam": "Ты ${gender(\"мальчик\", \"девочка\", \"дуб?\")}",
             "meow": "${meow}",
-            "nowtime": "Сейчас ${time.in_words(now, seconds=False)}"
+            "nowtime": "Сейчас ${time.in_words(now, seconds=False)}",
+            "start": "Привет, я бот из примера ${F.link(F.bold(\"Langrinder\"), \"github.com/tirch/langrinder\")}!",
+            "help": "${F.bold(f\"Мяу, {F.mention()}!\")}\nЗдесь мы тестируем Langrinder"
         }
     }
 
