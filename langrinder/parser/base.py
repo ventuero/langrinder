@@ -14,17 +14,23 @@ class LangrinderBaseParser:
         parsed_locale_data = {}
 
         messages = list(cls.MESSAGE_PATTERN.finditer(string))
-        blocks = list(cls.BLOCK_PATTERN.finditer(string))
 
         for message in messages:
+            string = string.replace(message.group("message"), "")
             name = message.group("name")
-            logger.debug("Found message with name={} content={}", name, message.group("data"))
+            logger.debug(
+                "Found message with name={} content={}",
+                name,
+                message.group("data")
+            )
             parsed_locale_data[name] = message.group("data")
+
+        blocks = list(cls.BLOCK_PATTERN.finditer(string))
 
         for block in blocks:
             name = block.group("name")
-            data = cls._clean_block_indentation(block.group("data"))
-            logger.debug("Found block with name={} content={}", name, data)
+            data = cls._clean_block_indentation(block.group("data")).strip()
+            logger.debug("Found block with name={} content=\n{}", name, data)
             parsed_locale_data[name] = data
 
         return parsed_locale_data
@@ -42,5 +48,5 @@ class LangrinderBaseParser:
             else:
                 cleaned_lines.append(line)
 
-        logger.debug("Cleaned lines: {}", cleaned_lines)
+        logger.debug("Cleaned lines:\n{}", cleaned_lines)
         return cls.JOINER.join(cleaned_lines)
