@@ -73,7 +73,7 @@ class LangrinderTranslationsGenerator:
                 with file_path.open("r", encoding="utf-8") as f:
                     file_content = f.read()
                     if self.logger:
-                        self.logger.debug("Rendering '{}'", locale_name)
+                        self.logger.info("Rendering '{}'", locale_name)
                     parsed_data_for_locale = self.parser.parse_to_dict(
                         file_content,
                     )
