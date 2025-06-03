@@ -1,6 +1,6 @@
 [project]
 name = "langrinder"
-version = "2.0.5"
+version = "2.0.6"
 description = "Engine for i18n with telegrinder integration based on mako!"
 readme = "README.md"
 requires-python = "<4.0,>=3.12"
