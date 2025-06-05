@@ -21,7 +21,7 @@ class LangrinderBaseParser:
             logger.debug(
                 "Found message with name={} content={}",
                 name,
-                message.group("data")
+                message.group("data"),
             )
             parsed_locale_data[name] = message.group("data")
 

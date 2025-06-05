@@ -64,20 +64,36 @@ class LangrinderTranslationsGenerator:
             pack=tr_pack,
         )
 
+    def _parse_locale_directory(self, locale_dir: Path) -> dict:
+        merged_data = {}
+
+        for file_path in locale_dir.rglob("*.mako"):
+            if self.logger:
+                self.logger.debug("Processing file: '{}'", file_path)
+
+            with file_path.open("r", encoding="utf-8") as f:
+                file_content = f.read()
+                parsed_data = self.parser.parse_to_dict(file_content)
+                merged_data.update(parsed_data)
+
+        return merged_data
+
     def generate(self, output_file: str, input_dir: str):
         node_result = self.generate_node()
         pack = {}
-        for file_path in Path(input_dir).iterdir():
-            if file_path.is_file() and file_path.suffix == ".mako":
-                locale_name = file_path.stem
-                with file_path.open("r", encoding="utf-8") as f:
-                    file_content = f.read()
-                    if self.logger:
-                        self.logger.info("Rendering '{}'", locale_name)
-                    parsed_data_for_locale = self.parser.parse_to_dict(
-                        file_content,
-                    )
-                    pack[locale_name] = parsed_data_for_locale
+
+        input_path = Path(input_dir)
+
+        for locale_dir in input_path.iterdir():
+            if locale_dir.is_dir():
+                locale_name = locale_dir.name
+                if self.logger:
+                    self.logger.info("Processing locale: '{}'", locale_name)
+
+                locale_data = self._parse_locale_directory(locale_dir)
+
+                if locale_data:
+                    pack[locale_name] = locale_data
 
         translation_result = self.generate_translation(
             dump_to_pack(pack),
