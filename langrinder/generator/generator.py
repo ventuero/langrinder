@@ -24,6 +24,7 @@ class LangrinderTranslationsGenerator:
         self.tr_name = translation_name
         self.node = node
         self.logger = logger
+        self.ignore = ["__pycache__"]
 
     def generate_import(self, obj):
         module_name = inspect.getmodule(obj).__name__
@@ -93,6 +94,8 @@ class LangrinderTranslationsGenerator:
         for locale_dir in input_path.iterdir():
             if locale_dir.is_dir():
                 locale_name = locale_dir.name
+                if locale_name in self.ignore:
+                    continue
                 if self.logger:
                     self.logger.info("Processing locale: '{}'", locale_name)
 
