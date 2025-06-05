@@ -53,21 +53,14 @@ class BaseTranslation:
             )
             .value(locale=self.locale)
         )
-        time_wrapper = (
-            ctx
-            .get("time_wrapper")
-            .unwrap_or(
-                GlobalCtxVar(PendulumWrapper, name="time_wrapper"),
-            )
-            .value(locale=self.locale)
-        )
+        # skipped pendulum integration
         return TextResult(
             tmp,
             {
                 "F": HTML(user=self.user),
                 "this": this,
                 "plural": plural.plural,
-                "time": time_wrapper,
+                # skipped pendulum integration
                 **ctx.get("args").unwrap_or(GlobalCtxVar({}, name="args")).value,
             },
         )

@@ -46,9 +46,15 @@ class LangrinderTranslationsGenerator:
         node_import, node_class = self.generate_import(self.node)
         if self.logger:
             self.logger.debug("Rendering node")
+        try:
+            import pendulum
+            use_pendulum = True
+        except ImportError:
+            use_pendulum = False
         return tmp.render(
             custom_node=node_import,
             custom_node_name=node_class,
+            use_pendulum=use_pendulum,
         )
 
     def generate_translation(self, tr_pack: dict):

@@ -53,6 +53,8 @@ class BaseTranslation:
             )
             .value(locale=self.locale)
         )
+        ${
+        """
         time_wrapper = (
             ctx
             .get("time_wrapper")
@@ -61,13 +63,15 @@ class BaseTranslation:
             )
             .value(locale=self.locale)
         )
+        """ if use_pendulum else "# skipped pendulum integration"
+        }
         return TextResult(
             tmp,
             {
                 "F": HTML(user=self.user),
                 "this": this,
                 "plural": plural.plural,
-                "time": time_wrapper,
+                ${"\"time\": time_wrapper," if use_pendulum else "# skipped pendulum integration"}
                 **ctx.get("args").unwrap_or(GlobalCtxVar({}, name="args")).value,
             },
         )
