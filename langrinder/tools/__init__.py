@@ -1,2 +1,4 @@
-from .gender import Gender, GenderGenerator
-from .plural import PluralGenerator
+from .html import HTMLFormatter
+from .imports import import_class
+from .pluralizer import Pluralizer
+from .time import TimeFormatter
