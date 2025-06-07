@@ -1,0 +1,8 @@
+{
+    "en": {
+        "start": "Hello, ${name}!"
+    },
+    "ru": {
+        "start": "Привет, ${name}!"
+    }
+}

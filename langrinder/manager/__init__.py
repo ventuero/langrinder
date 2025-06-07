@@ -1,0 +1,1 @@
+from .mng import LocaleManager

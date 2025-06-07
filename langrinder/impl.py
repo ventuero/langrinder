@@ -1,53 +1,46 @@
-import importlib.resources
-import logging
+from pathlib import Path
+from typing import Any
 
-from telegrinder.node import Node
+from .tools import HTMLFormatter, Pluralizer, TimeFormatter, import_class
 
-from langrinder.generator import (
-    LangrinderBaseGenerator,
-    LangrinderTranslationsGenerator,
-)
-from langrinder.nodes import ConstLanguageCode
-from langrinder.parser import LangrinderBaseParser, LangrinderSyntaxParser
+DEFAULT_COMPILER = "langrinder.JSONCompiler"
 
 
 class Langrinder:
-    """
-    Main Langrinder class.
-    """
-    LANGRINDER_PATH = importlib.resources.files("langrinder")
-
     def __init__(
             self,
-            generator: type[LangrinderBaseGenerator]
-                = LangrinderTranslationsGenerator,
-            parser: type[LangrinderBaseParser] = LangrinderSyntaxParser,
-            node_template: str = (
-                f"{LANGRINDER_PATH}/generator/templates/node.mako"
-            ),
-            translation_template: str = (
-                f"{LANGRINDER_PATH}/generator/templates/translation.mako"
-            ),
-            translation_name: str = "Translation",
-            node: type[Node] = ConstLanguageCode,
-            logger: logging.Logger | None = None,
+            compiled_file: Path | str,
+            compiler: str = DEFAULT_COMPILER,
+            args: dict[str, Any] | None = None,
+            tz: str | None = None,
+            raise_value_error: bool = True,
     ):
-        self.logger = logger
-        self.gen = generator(
-            node_path=node_template,
-            translation_path=translation_template,
-            translation_name=translation_name,
-            node=node,
-            logger=self.logger,
-        )
-        self.gen.parser = parser()
+        """
+        Main class of Langrinder.
 
-    def compile(self, input_dir: str, output_file: str):
-        self.gen.generate(
-            output_file=output_file,
-            input_dir=input_dir,
+        :param compiled_file: File to load translation
+        :param compiler: Compiler to load translation
+        :param args: Global args for locales
+        :param tz: Timezone for `TimeFormatter`
+        :param raise_value_error: Raise value error if locale not found
+        """
+        file = (
+            compiled_file
+            if isinstance(compiled_file, Path)
+            else Path(compiled_file)
         )
-        if not self.logger:
-            print("Locales generated")
-            return
-        self.logger.info("Locales generated")
+        compiler = import_class(compiler)
+        self.args = args if args else {}
+        file_content = self.read(file)
+        self.content: dict = compiler.load(file_content)
+        self.tz = tz
+        self.raise_val_error = raise_value_error
+
+    @staticmethod
+    def read(file: Path) -> str:
+        with file.open("r", encoding="utf-8") as f:
+            return f.read()
+
+    def locale(self, loc: str):
+        from .manager.mng import LocaleManager
+        return LocaleManager(lgr=self, locale=loc)
