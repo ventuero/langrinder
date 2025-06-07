@@ -1,0 +1,49 @@
+line-length = 79
+target-version = "py312"
+src = ["src"]
+
+include = ["langrinder/**.py"]
+exclude = ["example/locales/i18n.py"]
+
+[lint]
+select = [
+    "ALL"
+]
+ignore = [
+    "ARG",
+    "ANN",
+    "D",
+    "EM101",
+    "EM102",
+    "PT001",
+    "PT023",
+    "SIM108",
+    "RET505",
+    "PLR0913",
+    "SIM103",
+    "ISC003",
+    "SIM114", # identical by code != identical by meaning
+    # awful things, never use.
+    # It makes runtime work differently from typechecker
+    "TC001",
+    "TC002",
+    "TC003",
+    "TC006",
+    "UP038", # only affects perfomance and brings nothing useful
+    "F401",
+    "RUF",
+    "S702",
+    "PLR2004",
+    "T201",
+    "FBT001",
+    "FBT002",
+    "PLE1205"
+]
+isort.no-lines-before = ["local-folder"]
+flake8-tidy-imports.ban-relative-imports = "parents"
+
+[format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"

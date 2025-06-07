@@ -1,24 +1,32 @@
 [project]
 name = "langrinder"
-version = "2.1.1"
-description = "Engine for i18n with telegrinder integration based on mako!"
+version = "3.0.0"
+description = "Flexible internationalization engine based on Mako templates"
 readme = "README.md"
 requires-python = "<4.0,>=3.12"
 authors = [
     {name = "tirch", email = "amerfoe@gmail.com"}
 ]
 dependencies = [
+    "babel>=2.17.0",
     "mako>=1.3.10",
-    "telegrinder",
+    "pytz>=2025.2",
+    "ujson>=5.10.0",
 ]
+
+[project.scripts]
+langrinder = "langrinder.cli.main:app"
 
 [project.optional-dependencies]
 dev = [
     "loguru>=0.7.3",
     "ruff>=0.11.12",
 ]
-pendulum = [
-    "pendulum>=3.1.0",
+telegrinder = [
+    "telegrinder",
+]
+cli = [
+    "typer>=0.16.0",
 ]
 
 [tool.uv]
@@ -28,59 +36,4 @@ package = true
 telegrinder = { git = "https://github.com/timoniq/telegrinder", rev = "dev" }
 
 [tool.setuptools.package-data]
-"langrinder.generator.templates" = ["*.mako"]
-
-[tool.ruff]
-line-length = 79
-target-version = "py312"
-src = ["src"]
-
-include = ["langrinder/**.py"]
-exclude = ["example/locales/i18n.py"]
-
-[tool.ruff.lint]
-select = [
-    "ALL"
-]
-ignore = [
-    "ARG",
-    "ANN",
-    "D",
-    "EM101",
-    "EM102",
-    "PT001",
-    "PT023",
-    "SIM108",
-    "RET505",
-    "PLR0913",
-    "SIM103",
-    "ISC003",
-    "SIM114", # identical by code != identical by meaning
-    # awful things, never use.
-    # It makes runtime work differently from typechecker
-    "TC001",
-    "TC002",
-    "TC003",
-    "TC006",
-    "UP038", # only affects perfomance and brings nothing useful
-    "F401",
-    "RUF",
-    "S702",
-    "PLR2004",
-    "T201",
-    "FBT001",
-    "FBT002",
-    "PLE1205"
-]
-
-[tool.ruff.lint.isort]
-no-lines-before = ["local-folder"]
-
-[tool.ruff.lint.flake8-tidy-imports]
-ban-relative-imports = "parents"
-
-[tool.ruff.format]
-quote-style = "double"
-indent-style = "space"
-skip-magic-trailing-comma = false
-line-ending = "auto"
+"langrinder.templates" = ["*.mako"]
