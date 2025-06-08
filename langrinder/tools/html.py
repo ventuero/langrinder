@@ -3,7 +3,7 @@ class HTMLFormatter:
     def wrap(text: str, tag: str, *args, **kwargs):
         params = [f" {name}='{val}'" for name, val in kwargs.items()]
         _args = [f" {arg}" for arg in args]
-        return f"<{tag}{_args}{params}>{text}</{tag}>"
+        return f"<{tag}{''.join(_args)}{''.join(params)}>{text}</{tag}>"
 
     @classmethod
     def bold(cls, text: str):  return cls.wrap(text, "b")
