@@ -19,6 +19,7 @@ class LocaleManager:
             "time": time_fmt,
             "html": HTMLFormatter,
             "plural": Pluralizer(locale).plural,
+            "this": self,
         }
 
     def __getattr__(self, item: str):
