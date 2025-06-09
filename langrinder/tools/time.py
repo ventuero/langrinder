@@ -15,6 +15,9 @@ class TimeFormatter:
         self.locale = locale_code
         self.tzinfo = get_timezone(tz_name) if tz_name else os.getenv("TZ")
 
+    def fmt(self, dt: datetime, _format: str = "medium") -> str:
+        return format_datetime(dt, format=_format, locale=self.locale)
+
     def now(self) -> datetime:
         return datetime.now(tz=self.tzinfo)
 
@@ -52,33 +55,13 @@ class TimeFormatter:
         minutes, seconds = divmod(remainder, 60)
 
         if days > 0:
-            parts.append(format_timedelta(
-                timedelta(days=days),
-                granularity="day",
-                format=fmt,
-                locale=self.locale,
-            ))
+            parts.append(("day", days))
         if hours > 0:
-            parts.append(format_timedelta(
-                timedelta(hours=hours),
-                granularity="hour",
-                format=fmt,
-                locale=self.locale,
-            ))
+            parts.append(("hour", hours))
         if minutes > 0 and granularity in ("minute", "second"):
-            parts.append(format_timedelta(
-                timedelta(minutes=minutes),
-                granularity="minute",
-                format=fmt,
-                locale=self.locale,
-            ))
+            parts.append(("minute", minutes))
         if seconds > 0 and granularity == "second":
-            parts.append(format_timedelta(
-                timedelta(seconds=seconds),
-                granularity="second",
-                format=fmt,
-                locale=self.locale,
-            ))
+            parts.append(("second", seconds))
 
         if not parts:
             return format_timedelta(
@@ -89,7 +72,17 @@ class TimeFormatter:
                 locale=self.locale,
             )
 
-        formatted_delta = ", ".join(parts)
+        formatted_parts = [
+            format_timedelta(
+                timedelta(**{unit + "s": value}),
+                granularity=unit,
+                format=fmt,
+                locale=self.locale,
+            )
+            for unit, value in parts
+        ]
+
+        formatted_delta = ", ".join(formatted_parts)
 
         if add_direction:
             base_delta_str = format_timedelta(
