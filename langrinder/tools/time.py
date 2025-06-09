@@ -1,6 +1,4 @@
-import os
-from datetime import datetime, timedelta
-
+from datetime import timedelta, datetime
 from babel.dates import (
     format_date,
     format_datetime,
@@ -8,15 +6,12 @@ from babel.dates import (
     format_timedelta,
     get_timezone,
 )
-
+import os
 
 class TimeFormatter:
     def __init__(self, locale_code: str = "ru", tz_name: str | None = None):
         self.locale = locale_code
         self.tzinfo = get_timezone(tz_name) if tz_name else os.getenv("TZ")
-
-    def fmt(self, dt: datetime, _format: str = "medium") -> str:
-        return format_datetime(dt, format=_format, locale=self.locale)
 
     def now(self) -> datetime:
         return datetime.now(tz=self.tzinfo)
@@ -50,19 +45,19 @@ class TimeFormatter:
     ) -> str:
         total_seconds = int(abs(delta).total_seconds())
 
+        granularity_order = ["day", "hour", "minute", "second"]
+        max_index = granularity_order.index(granularity)
+
         days, rem = divmod(total_seconds, 86400)
         hours, rem = divmod(rem, 3600)
         minutes, seconds = divmod(rem, 60)
 
-        result = []
-        if granularity in ("day", "hour", "minute", "second") and days:
-            result.append(("day", days))
-        if granularity in ("hour", "minute", "second") and hours:
-            result.append(("hour", hours))
-        if granularity in ("minute", "second") and minutes:
-            result.append(("minute", minutes))
-        if granularity == "second" and seconds:
-            result.append(("second", seconds))
+        units = [("day", days), ("hour", hours), ("minute", minutes), ("second", seconds)]
+        result = [
+            (unit, value)
+            for unit, value in units[: max_index + 1]
+            if value > 0
+        ]
 
         if not result:
             return format_timedelta(
@@ -86,6 +81,7 @@ class TimeFormatter:
         formatted = ", ".join(parts)
 
         if add_direction:
+            # Add direction to total delta string and replace duration text with our custom text
             base_text = format_timedelta(
                 delta,
                 granularity=granularity,
