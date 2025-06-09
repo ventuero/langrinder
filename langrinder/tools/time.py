@@ -1,4 +1,5 @@
 import os
+from collections import defaultdict
 from datetime import datetime, timedelta
 
 from babel.dates import (
@@ -49,23 +50,29 @@ class TimeFormatter:
         fmt: str = "long",
     ) -> str:
         delta_abs = abs(delta)
+
         total_seconds = int(delta_abs.total_seconds())
+        unit_values = defaultdict(int)
 
-        days, remainder = divmod(total_seconds, 86400)
-        hours, remainder = divmod(remainder, 3600)
-        minutes, seconds = divmod(remainder, 60)
+        if granularity in ("day", "hour", "minute", "second"):
+            unit_values["day"], rem = divmod(total_seconds, 86400)
+        else:
+            rem = total_seconds
 
-        values = []
-        if days > 0:
-            values.append(("day", days))
-        if hours > 0:
-            values.append(("hour", hours))
-        if minutes > 0 and granularity in ("minute", "second"):
-            values.append(("minute", minutes))
-        if seconds > 0 and granularity == "second":
-            values.append(("second", seconds))
+        if granularity in ("hour", "minute", "second"):
+            unit_values["hour"], rem = divmod(rem, 3600)
+        if granularity in ("minute", "second"):
+            unit_values["minute"], rem = divmod(rem, 60)
+        if granularity == "second":
+            unit_values["second"] = rem
 
-        if not values:
+        parts = [
+            (unit, value)
+            for unit, value in unit_values.items()
+            if value > 0
+        ]
+
+        if not parts:
             return format_timedelta(
                 delta_abs,
                 granularity=granularity,
@@ -74,17 +81,15 @@ class TimeFormatter:
                 locale=self.locale,
             )
 
-        formatted_parts = [
+        formatted = ", ".join(
             format_timedelta(
-                timedelta(**{unit + "s": count}),
+                timedelta(**{unit + "s": value}),
                 granularity=unit,
                 format=fmt,
                 locale=self.locale,
             )
-            for unit, count in values
-        ]
-
-        result = ", ".join(formatted_parts)
+            for unit, value in parts
+        )
 
         if add_direction:
             base_delta_str = format_timedelta(
@@ -100,9 +105,9 @@ class TimeFormatter:
                 format=fmt,
                 locale=self.locale,
             )
-            return base_with_direction.replace(base_delta_str, result)
+            return base_with_direction.replace(base_delta_str, formatted)
 
-        return result
+        return formatted
 
     def ago(
         self,
