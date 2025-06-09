@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Any
 
-from .tools import HTMLFormatter, Pluralizer, TimeFormatter, import_class
+from .tools import import_class
 
 DEFAULT_COMPILER = "langrinder.JSONCompiler"
 
@@ -12,7 +12,6 @@ class Langrinder:
             compiled_file: Path | str,
             compiler: str = DEFAULT_COMPILER,
             args: dict[str, Any] | None = None,
-            tz: str | None = None,
             raise_value_error: bool = True,
     ):
         """
@@ -21,7 +20,6 @@ class Langrinder:
         :param compiled_file: File to load translation
         :param compiler: Compiler to load translation
         :param args: Global args for locales
-        :param tz: Timezone for `TimeFormatter`
         :param raise_value_error: Raise value error if locale not found
         """
         file = (
@@ -33,7 +31,6 @@ class Langrinder:
         self.args = args if args else {}
         file_content = self.read(file)
         self.content: dict = compiler.load(file_content)
-        self.tz = tz
         self.raise_val_error = raise_value_error
 
     @staticmethod

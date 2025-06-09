@@ -1,7 +1,7 @@
 from mako.template import Template
 
 from langrinder.impl import Langrinder
-from langrinder.tools import HTMLFormatter, Pluralizer, TimeFormatter
+from langrinder.tools import HTMLFormatter, Pluralizer
 from langrinder.types import TextResult
 
 
@@ -10,13 +10,7 @@ class LocaleManager:
         self.pack: dict = lgr.content[locale]
         self.lgr = lgr
 
-        if lgr.tz:
-            time_fmt = TimeFormatter(locale, tz_name=lgr.tz)
-        else:
-            time_fmt = TimeFormatter(locale)
-
         self.DEFAULT_ARGS = {
-            "time": time_fmt,
             "html": HTMLFormatter,
             "plural": Pluralizer(locale).plural,
             "this": self,
