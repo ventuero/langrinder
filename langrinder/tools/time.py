@@ -1,5 +1,4 @@
 import os
-from collections import defaultdict
 from datetime import datetime, timedelta
 
 from babel.dates import (
@@ -49,63 +48,58 @@ class TimeFormatter:
         granularity: str = "second",
         fmt: str = "long",
     ) -> str:
-        delta_abs = abs(delta)
+        total_seconds = int(abs(delta).total_seconds())
 
-        total_seconds = int(delta_abs.total_seconds())
-        unit_values = defaultdict(int)
+        days, rem = divmod(total_seconds, 86400)
+        hours, rem = divmod(rem, 3600)
+        minutes, seconds = divmod(rem, 60)
 
-        if granularity in ("day", "hour", "minute", "second"):
-            unit_values["day"], rem = divmod(total_seconds, 86400)
-        else:
-            rem = total_seconds
+        result = []
+        if granularity in ("day", "hour", "minute", "second") and days:
+            result.append(("day", days))
+        if granularity in ("hour", "minute", "second") and hours:
+            result.append(("hour", hours))
+        if granularity in ("minute", "second") and minutes:
+            result.append(("minute", minutes))
+        if granularity == "second" and seconds:
+            result.append(("second", seconds))
 
-        if granularity in ("hour", "minute", "second"):
-            unit_values["hour"], rem = divmod(rem, 3600)
-        if granularity in ("minute", "second"):
-            unit_values["minute"], rem = divmod(rem, 60)
-        if granularity == "second":
-            unit_values["second"] = rem
-
-        parts = [
-            (unit, value)
-            for unit, value in unit_values.items()
-            if value > 0
-        ]
-
-        if not parts:
+        if not result:
             return format_timedelta(
-                delta_abs,
+                abs(delta),
                 granularity=granularity,
                 add_direction=add_direction,
                 format=fmt,
                 locale=self.locale,
             )
 
-        formatted = ", ".join(
+        parts = [
             format_timedelta(
                 timedelta(**{unit + "s": value}),
                 granularity=unit,
                 format=fmt,
                 locale=self.locale,
             )
-            for unit, value in parts
-        )
+            for unit, value in result
+        ]
+
+        formatted = ", ".join(parts)
 
         if add_direction:
-            base_delta_str = format_timedelta(
+            base_text = format_timedelta(
                 delta,
                 granularity=granularity,
                 format=fmt,
                 locale=self.locale,
             )
-            base_with_direction = format_timedelta(
+            directed_text = format_timedelta(
                 delta,
                 granularity=granularity,
+                format=fmt,
                 add_direction=True,
-                format=fmt,
                 locale=self.locale,
             )
-            return base_with_direction.replace(base_delta_str, formatted)
+            return directed_text.replace(base_text, formatted)
 
         return formatted
 
