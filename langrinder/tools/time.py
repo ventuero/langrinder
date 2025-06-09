@@ -49,21 +49,23 @@ class TimeFormatter:
         fmt: str = "long",
     ) -> str:
         delta_abs = abs(delta)
-        parts = []
-        days = delta_abs.days
-        hours, remainder = divmod(delta_abs.seconds, 3600)
+        total_seconds = int(delta_abs.total_seconds())
+
+        days, remainder = divmod(total_seconds, 86400)
+        hours, remainder = divmod(remainder, 3600)
         minutes, seconds = divmod(remainder, 60)
 
+        values = []
         if days > 0:
-            parts.append(("day", days))
+            values.append(("day", days))
         if hours > 0:
-            parts.append(("hour", hours))
+            values.append(("hour", hours))
         if minutes > 0 and granularity in ("minute", "second"):
-            parts.append(("minute", minutes))
+            values.append(("minute", minutes))
         if seconds > 0 and granularity == "second":
-            parts.append(("second", seconds))
+            values.append(("second", seconds))
 
-        if not parts:
+        if not values:
             return format_timedelta(
                 delta_abs,
                 granularity=granularity,
@@ -74,15 +76,15 @@ class TimeFormatter:
 
         formatted_parts = [
             format_timedelta(
-                timedelta(**{unit + "s": value}),
+                timedelta(**{unit + "s": count}),
                 granularity=unit,
                 format=fmt,
                 locale=self.locale,
             )
-            for unit, value in parts
+            for unit, count in values
         ]
 
-        formatted_delta = ", ".join(formatted_parts)
+        result = ", ".join(formatted_parts)
 
         if add_direction:
             base_delta_str = format_timedelta(
@@ -91,16 +93,16 @@ class TimeFormatter:
                 format=fmt,
                 locale=self.locale,
             )
-            base_direction_str = format_timedelta(
+            base_with_direction = format_timedelta(
                 delta,
                 granularity=granularity,
                 add_direction=True,
                 format=fmt,
                 locale=self.locale,
             )
-            return base_direction_str.replace(base_delta_str, formatted_delta)
+            return base_with_direction.replace(base_delta_str, result)
 
-        return formatted_delta
+        return result
 
     def ago(
         self,
