@@ -49,6 +49,7 @@ def compile_locales(
         help="Comma-separated list of message separators",
     ),
 ):
+    echo("[•] Compiling...")
     compiler = import_class(compiler)
     if not issubclass(compiler, ABCCompiler):
         raise TypeError(ERROR_COMPILER)
@@ -80,7 +81,7 @@ def compile_locales(
         if locale_list != DEFAULT_LOCALES and locale not in locale_list:
             continue
 
-        echo(f"Compiling '{locale}/{file.stem}'")
+        echo(f"    > {locale}: '{file.stem}'")
 
         with file.open("r", encoding="utf-8") as f:
             content = f.readlines()
@@ -99,4 +100,4 @@ def compile_locales(
         compiled = compiled[1]
 
     Path(output_file).write_text(compiled, encoding="utf-8")
-    echo("Locales compiled successfully!")
+    echo("[✓] Locales compiled sucessfully!")
