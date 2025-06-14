@@ -100,8 +100,9 @@ class SyntaxParser(ABCParser):
     def parse_all(self) -> dict[str, str] | None:
         results = {}
 
-        messages, message_lines = self.parse_messages()
-        if messages:
+        messages, message_lines = self.parse_messages() or ({}, [])
+
+        if messages and message_lines:
             logger.debug("Found %d messages", len(messages))
             results.update(messages)
 
@@ -109,7 +110,7 @@ class SyntaxParser(ABCParser):
             line
             for i, line in enumerate(self.content)
             if i not in message_lines
-        ]
+        ] if message_lines else self.content
 
         temp_parser = SyntaxParser(lines_for_blocks, self.params)
         blocks = temp_parser.parse_blocks()
