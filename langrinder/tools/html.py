@@ -17,8 +17,8 @@ class HTMLFormatter:
     def stroke(cls, text: str): return cls.wrap(text, "s")
 
     @classmethod
-    def pre(cls, language: str, text: str):
-        return cls.wrap(text, "b", language=language)
+    def pre(cls, text: str, language: str):
+        return cls.wrap(text, "pre", language=language)
 
     @classmethod
     def quote(cls, text: str): return cls.wrap(text, "blockquote")
