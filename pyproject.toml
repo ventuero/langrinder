@@ -1,6 +1,6 @@
 [project]
 name = "langrinder"
-version = "3.0.1"
+version = "3.1.0"
 description = "Flexible internationalization engine based on Mako templates"
 readme = "README.md"
 requires-python = "<4.0,>=3.12"
@@ -16,6 +16,7 @@ dependencies = [
 
 [project.scripts]
 langrinder = "langrinder.cli.main:app"
+lgr = "langrinder.cli.main:app"
 
 [project.optional-dependencies]
 dev = [
@@ -27,6 +28,10 @@ telegrinder = [
 ]
 cli = [
     "typer>=0.16.0",
+]
+docs = [
+    "sphinx>=8.2.3",
+    "sphinx-immaterial>=0.13.5",
 ]
 
 [tool.uv]
