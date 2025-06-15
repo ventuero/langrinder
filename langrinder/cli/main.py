@@ -28,7 +28,7 @@ def compile_locales(
         "-l",
         help="Comma-separated list of locales to compile (e.g. 'ru,en')",
     ),
-    compiler: str = Option(
+    _compiler: str = Option(
         DEFAULT_COMPILER,
         "--compiler",
         "-c",
@@ -50,11 +50,11 @@ def compile_locales(
     ),
 ):
     echo("[•] Compiling...")
-    compiler = import_class(compiler)
+    compiler = import_class(_compiler)
     if not issubclass(compiler, ABCCompiler):
         raise TypeError(ERROR_COMPILER)
 
-    parser_class = import_class(parser)
+    parser_class: type[ABCParser] = import_class(parser)
     if not issubclass(parser_class, ABCParser):
         raise TypeError(ERROR_PARSER)
 
@@ -66,13 +66,15 @@ def compile_locales(
     separators = message_separators.split(",")
 
     params = ParserParameters(
-        vars_prefix=vars_prefix,
-        indent=indent,
-        blocks_end=blocks_end,
-        joiner=joiner,
-        message_separators=separators,
+        vars_prefix=vars_prefix, # type: ignore
+        indent=indent, # type: ignore
+        blocks_end=blocks_end, # type: ignore
+        joiner=joiner, # type: ignore
+        message_separators=separators, # type: ignore
     )
     results = {}
+
+    compiled = (False, "")
 
     for file in Path(locales_dir).rglob("*.mako"):
         relative_path = file.relative_to(locales_dir)
@@ -86,7 +88,7 @@ def compile_locales(
         with file.open("r", encoding="utf-8") as f:
             content = f.readlines()
 
-        parser_instance = parser_class(content=content, params=params)
+        parser_instance = parser_class(content=content, params=params) # type: ignore
         parsed = parser_instance.parse_all()
         if parsed:
             if results.get(locale):
@@ -99,5 +101,8 @@ def compile_locales(
     if isinstance(compiled, tuple):
         compiled = compiled[1]
 
+    if not compiled:
+        return echo("[✕] Result is None!")
+
     Path(output_file).write_text(compiled, encoding="utf-8")
-    echo("[✓] Locales compiled sucessfully!")
+    return echo("[✓] Locales compiled sucessfully!")

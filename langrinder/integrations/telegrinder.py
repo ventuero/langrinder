@@ -7,8 +7,8 @@ from langrinder.manager import LocaleManager
 
 
 class ConstI18nMiddleware(ABCMiddleware):
-    def __init__(self, lgr: Langrinder, locale: str, alias: str = "i18n"):
-        self.mng = LocaleManager(lgr=lgr, locale=locale)
+    def __init__(self, i18n: Langrinder, locale: str, alias: str = "i18n"):
+        self.mng = LocaleManager(i18n=i18n, locale=locale)
         self.alias = alias
     async def pre(self, ctx: Context):
         ctx.set(self.alias, self.mng)
@@ -16,13 +16,20 @@ class ConstI18nMiddleware(ABCMiddleware):
 
 
 class UserLanguageI18nMiddleware(ABCMiddleware):
-    def __init__(self, lgr: Langrinder, alias: str = "i18n"):
+    def __init__(
+        self,
+        i18n: Langrinder,
+        alias: str = "i18n",
+        default_locale: str = "en",
+    ):
         self.alias = alias
-        self.lgr = lgr
+        self.i18n = i18n
+        self.default_locale = default_locale
+
     async def pre(self, ctx: Context, user: UserSource):
-        language = user.language_code.unwrap_err()
-        if language not in self.lgr.content:
+        language: str = user.language_code.unwrap_or(self.default_locale)
+        if language not in self.i18n.content:
             raise LocaleNotFoundError(language)
-        mng = LocaleManager(lgr=self.lgr, locale=language)
+        mng = LocaleManager(i18n=self.i18n, locale=language)
         ctx.set(self.alias, mng)
         return True

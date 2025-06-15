@@ -1,4 +1,6 @@
 class HTMLFormatter:
+    """Langrinder HTML shortcuts"""
+
     @staticmethod
     def wrap(text: str, tag: str, *args, **kwargs):
         params = [f" {name}='{val}'" for name, val in kwargs.items()]
@@ -11,6 +13,8 @@ class HTMLFormatter:
     def italic(cls, text: str): return cls.wrap(text, "i")
     @classmethod
     def mono(cls, text: str): return cls.wrap(text, "code")
+    @classmethod
+    def code(cls, *args, **kwargs): return cls.mono(*args, **kwargs)
     @classmethod
     def under(cls, text: str): return cls.wrap(text, "u")
     @classmethod

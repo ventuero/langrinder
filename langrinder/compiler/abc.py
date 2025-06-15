@@ -1,12 +1,13 @@
 from abc import ABC, abstractmethod
-from typing import Any
 
 
 class ABCCompiler(ABC):
-    @staticmethod
-    @abstractmethod
-    def compile(source: dict) -> tuple[bool, Any | None]: ...
+    """Abstract compiler class for Langrinder"""
 
     @staticmethod
     @abstractmethod
-    def load(source: Any) -> dict | None: ...
+    def compile(source: dict) -> tuple[bool, str | None]: ...
+
+    @staticmethod
+    @abstractmethod
+    def load(source: str) -> dict: ...

@@ -3,6 +3,8 @@ from babel.plural import PluralRule
 
 
 class Pluralizer:
+    """Langrinder pluralizer (based on Babel)"""
+
     def __init__(self, locale_code: str):
         locale = Locale.parse(locale_code)
         self.rule = PluralRule(locale.plural_form.rules)
