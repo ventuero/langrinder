@@ -8,13 +8,13 @@
       <a href="https://docs.astral.sh/ruff/"><img alt="Code Style" src="https://img.shields.io/badge/code_style-Ruff-D7FF64?logo=ruff&logoColor=fff&style=flat-square&labelColor=black"></img></a>
       <a href="https://github.com/tirch/langrinder/blob/master/pyproject.toml"><img alt="Python versions" src="https://img.shields.io/python/required-version-toml?tomlFilePath=https%3A%2F%2Fraw.githubusercontent.com%2Ftirch%2Flangrinder%2Frefs%2Fheads%2Fmaster%2Fpyproject.toml&style=flat-square&logo=python&logoColor=fff&labelColor=black"></img></a>
       <a href="https://github.com/tirch/langrinder/blob/master/pyproject.toml">
-      <img alt="Project version" src="https://img.shields.io/badge/version-v3.0.0-black?style=flat-square&logo=python&logoColor=fff"></img></a>
+      <img alt="Project version" src="https://img.shields.io/badge/version-v3.1.0-black?style=flat-square&logo=python&logoColor=fff"></img></a>
     </p>
 </div>
 
 ## Why Langrinder?
 - Based on mako templates. Maximum flexibility and comfort
-- Compiles directly into Python classes
+- Flexible compilers & parsers (default: JSON compiler)
 - Variety of built-in functions and integrations
 
 ## Installation
@@ -41,14 +41,6 @@ pip install "langrinder[cli] @ git+..." # Recommended
 - Enjoy! See our [main example](./examples/main.py) and [bot example](./examples/bot.py)!
 
 ---
-
-## Latest update
-### v3.0.0 - Big update!
-- Free of Telegrinder
-- Free of Pendulum (switched to Babel)
-- New compiling style
-- Code rewriting and refactoring
-- CLI interface (`pip install langrinder[cli]`)
 
 ## License
 Langrinder licensed under [MIT license](LICENSE). Free and open-source!
