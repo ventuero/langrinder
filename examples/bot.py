@@ -10,9 +10,9 @@ logging.basicConfig()
 
 api = API(Token.from_env())
 bot = Telegrinder(api)
-lgr = Langrinder("examples/locales/compiled.json")
+i18n = Langrinder("examples/locales/compiled.json")
 bot.on.message.middlewares.extend(
-    [ConstI18nMiddleware(lgr, locale="ru", alias="_")],
+    [ConstI18nMiddleware(i18n, locale="ru", alias="_")],
 )
 
 
