@@ -37,7 +37,8 @@ ignore = [
     "T201",
     "FBT001",
     "FBT002",
-    "PLE1205"
+    "PLE1205",
+    "PGH003"
 ]
 isort.no-lines-before = ["local-folder"]
 flake8-tidy-imports.ban-relative-imports = "parents"
