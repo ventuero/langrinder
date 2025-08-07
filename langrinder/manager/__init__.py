@@ -1,1 +1,1 @@
-from .mng import LocaleManager
+from .manager import LocaleManager

@@ -1,6 +1,6 @@
 from .compiler import ABCCompiler, JSONCompiler
-from .exc import LocaleNotFoundError
-from .impl import Langrinder
+from .exceptions import LocaleNotFoundError
+from .main import Langrinder
 from .manager import LocaleManager
 from .parser import ABCParser, SyntaxParser
 from .tools import HTMLFormatter

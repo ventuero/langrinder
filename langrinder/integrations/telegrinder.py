@@ -1,8 +1,8 @@
 from telegrinder import ABCMiddleware, Context
 from telegrinder.node import UserSource
 
-from langrinder.exc import LocaleNotFoundError
-from langrinder.impl import Langrinder
+from langrinder.exceptions import LocaleNotFoundError
+from langrinder.main import Langrinder
 from langrinder.manager import LocaleManager
 
 

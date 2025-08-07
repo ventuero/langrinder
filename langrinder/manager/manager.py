@@ -1,7 +1,7 @@
 from mako.template import Template
 
-from langrinder.exc import LocaleNotFoundError
-from langrinder.impl import Langrinder
+from langrinder.exceptions import LocaleNotFoundError
+from langrinder.main import Langrinder
 from langrinder.tools import HTMLFormatter, Pluralizer
 
 

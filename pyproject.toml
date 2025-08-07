@@ -5,7 +5,7 @@ description = "Flexible internationalization engine based on Mako templates"
 readme = "README.md"
 requires-python = "<4.0,>=3.12"
 authors = [
-    {name = "tirch", email = "amerfoe@gmail.com"}
+    {name = "ventuero", email = "amerfoe@gmail.com"}
 ]
 dependencies = [
     "babel>=2.17.0",

@@ -49,5 +49,5 @@ class Langrinder:
             return f.read()
 
     def locale(self, loc: str):
-        from .manager.mng import LocaleManager
+        from .manager.manager import LocaleManager
         return LocaleManager(i18n=self, locale=loc)
