@@ -9,7 +9,7 @@ app = Typer()
 
 DEFAULT_LOCALES = "*"
 DEFAULT_COMPILER = "langrinder.JSONCompiler"
-DEFAULT_PARSER = "langrinder.SyntaxParser"
+DEFAULT_PARSER = "langrinder.CommonParser"
 ERROR_COMPILER = "Compiler must be a subclass of ABCCompiler"
 ERROR_PARSER = "Parser must be a subclass of ABCParser"
 
@@ -49,7 +49,7 @@ def compile_locales(
         help="Comma-separated list of message separators",
     ),
 ):
-    echo("[•] Compiling...")
+    echo("Compiling...")
     compiler = import_class(_compiler)
     if not issubclass(compiler, ABCCompiler):
         raise TypeError(ERROR_COMPILER)
@@ -102,7 +102,7 @@ def compile_locales(
         compiled = compiled[1]
 
     if not compiled:
-        return echo("[✕] Result is None!")
+        return echo("Result is None!")
 
     Path(output_file).write_text(compiled, encoding="utf-8")
-    return echo("[✓] Locales compiled sucessfully!")
+    return echo("Locales compiled sucessfully!")
