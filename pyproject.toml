@@ -29,10 +29,6 @@ telegrinder = [
 cli = [
     "typer>=0.16.0",
 ]
-docs = [
-    "sphinx>=8.2.3",
-    "sphinx-immaterial>=0.13.5",
-]
 
 [tool.uv]
 package = true
