@@ -1,6 +1,6 @@
 [project]
 name = "langrinder"
-version = "3.1.0"
+version = "3.2.0"
 description = "Flexible internationalization engine based on Mako templates"
 readme = "README.md"
 requires-python = "<4.0,>=3.12"
