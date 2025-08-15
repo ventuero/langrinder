@@ -7,7 +7,7 @@
       <a href="https://docs.astral.sh/ruff/"><img alt="Code Style" src="https://img.shields.io/badge/code_style-Ruff-D7FF64?logo=ruff&logoColor=fff&style=flat-square&labelColor=black"></img></a>
       <a href="https://github.com/ventuero/langrinder/blob/master/pyproject.toml"><img alt="Python versions" src="https://img.shields.io/python/required-version-toml?tomlFilePath=https%3A%2F%2Fraw.githubusercontent.com%2Fventuero%2Flangrinder%2Frefs%2Fheads%2Fmaster%2Fpyproject.toml&style=flat-square&logo=python&logoColor=fff&labelColor=black"></img></a>
       <a href="https://github.com/ventuero/langrinder/blob/master/pyproject.toml">
-      <img alt="Project version" src="https://img.shields.io/badge/version-v3.1.0-black?style=flat-square&logo=python&logoColor=fff"></img></a>
+      <img alt="Project version" src="https://img.shields.io/badge/version-v3.2.0-black?style=flat-square&logo=python&logoColor=fff"></img></a>
     </p>
 </div>
 
