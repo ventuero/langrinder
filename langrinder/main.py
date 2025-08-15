@@ -48,6 +48,6 @@ class Langrinder:
         with file.open("r", encoding="utf-8") as f:
             return f.read()
 
-    def locale(self, loc: str):
-        from .manager.manager import LocaleManager
+    def get_manager(self, loc: str):
+        from .manager.manager import LocaleManager  # noqa: PLC0415
         return LocaleManager(i18n=self, locale=loc)

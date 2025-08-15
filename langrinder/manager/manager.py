@@ -23,14 +23,8 @@ class LocaleManager:
             "this": self,
         }
 
-    def __getattr__(self, item: str) -> "LocaleManager":
-        self.sequence.append(item)
-        return self
-
-    def __call__(self, **kwargs) -> str:
-        key = self.i18n.sep.join(self.sequence)
+    def _get(self, key: str, **kwargs) -> str:
         text = self.pack.get(key, None if self.i18n.raise_val_error else key) # type: ignore
-        self.sequence = []
         if not text:
             raise ValueError(self.MESSAGE_NOT_FOUND.format(key))
         template = Template(text)
@@ -41,3 +35,18 @@ class LocaleManager:
                 **kwargs,
             ),
         )
+
+    def __getitem__(self, item: str):
+        return self._get(item)
+
+    def __getattr__(self, item: str) -> "LocaleManager":
+        self.sequence.append(item)
+        return self
+
+    def __call__(self, **kwargs) -> str:
+        key = self.i18n.sep.join(self.sequence)
+        self.sequence = []
+        return self._get(key, **kwargs)
+
+    def get_manager(self, loc: str) -> "LocaleManager":
+        return LocaleManager(i18n=self.i18n, locale=loc)

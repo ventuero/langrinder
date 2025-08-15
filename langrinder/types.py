@@ -4,7 +4,7 @@ from functools import partial
 langrinder_type = partial(dataclass, slots=True, frozen=True)
 
 
-@langrinder_type()
+@langrinder_type
 class ParserParameters:
     vars_prefix: str = "@"
     indent: str = " " * 4
