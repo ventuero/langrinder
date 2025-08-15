@@ -1,10 +1,14 @@
 {
     "en": {
         "start": "Hello, ${name}!",
-        "some-message": "Something"
+        "some-message": "Something",
+        "locale": "Current locale: English",
+        "locale-changed": "Locale changed to English!"
     },
     "ru": {
         "start": "Привет, ${name}!",
-        "some-message": "Что-то"
+        "some-message": "Что-то",
+        "locale": "Текущий язык: Русский",
+        "locale-changed": "Язык изменен на русский!"
     }
 }
