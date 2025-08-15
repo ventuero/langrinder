@@ -6,7 +6,7 @@ from langrinder.types import ParserParameters
 logger = logging.getLogger("langrinder.parser")
 
 
-class SyntaxParser(ABCParser):
+class CommonParser(ABCParser):
     def __init__(
             self,
             content: list[str],
@@ -112,7 +112,7 @@ class SyntaxParser(ABCParser):
             if i not in message_lines
         ] if message_lines else self.content
 
-        temp_parser = SyntaxParser(lines_for_blocks, self.params)
+        temp_parser = CommonParser(lines_for_blocks, self.params)
         blocks = temp_parser.parse_blocks()
 
         if blocks:

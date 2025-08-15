@@ -1,4 +1,4 @@
 from .abc import ABCParser
-from .syntax import SyntaxParser
+from .common import CommonParser
 
-__all__ = ("SyntaxParser", "ABCParser")
+__all__ = ("CommonParser", "ABCParser")
