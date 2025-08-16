@@ -3,6 +3,7 @@ import random
 
 from langrinder import Langrinder
 from langrinder.node import DefaultLocaleSource, I18nConfig, Translator
+from langrinder.rules import EqualsTo
 from telegrinder import API, Message, Telegrinder, Token
 from telegrinder.modules import setup_logger
 from telegrinder.node import UserSource, as_node
@@ -24,7 +25,7 @@ config = I18nConfig(
 I18nConfig.set(config)
 
 
-@bot.on.message(StartCommand())
+@bot.on.message(StartCommand() | EqualsTo("hello", ignore_case=True))
 async def on_start(message: Message, user: UserSource, _: Translator):
     await message.answer(_.start(name=user.first_name))
 
